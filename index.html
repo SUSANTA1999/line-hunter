@@ -356,6 +356,9 @@
         }
 
         function login() {
+            // Reload users from localStorage to get latest data
+            users = JSON.parse(localStorage.getItem('lineHunterUsers') || '[]');
+            
             const userId = document.getElementById('loginUserId').value;
             const password = document.getElementById('loginPassword').value;
 
@@ -908,7 +911,16 @@ Line Hunter Team`;
             console.log('New user object:', newUser);
 
             users.push(newUser);
+            console.log('Users after push:', users);
+            
             saveUsers();
+            console.log('Users saved to localStorage');
+            
+            // Verify save worked
+            const savedUsers = JSON.parse(localStorage.getItem('lineHunterUsers') || '[]');
+            console.log('Verified saved users:', savedUsers);
+            console.log('New user found in saved data:', savedUsers.find(u => u.id === newUser.id));
+            
             loadUsersTable();
             updateUserStatistics();
             
